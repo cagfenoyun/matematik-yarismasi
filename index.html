@@ -14,6 +14,12 @@
 html,body{margin:0;padding:0;height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow:auto;-webkit-user-select:none;user-select:none;
 background:radial-gradient(circle at 15% 10%,rgba(255,214,150,.65),transparent 45%),radial-gradient(circle at 85% 12%,rgba(255,170,180,.55),transparent 48%),radial-gradient(circle at 88% 90%,rgba(130,225,225,.6),transparent 50%),radial-gradient(circle at 8% 88%,rgba(255,236,150,.55),transparent 48%),linear-gradient(160deg,#FFF8EC,#FDEFF0 50%,#E9F8F8)}
 #app{position:relative;width:100vw;min-height:100vh;display:flex;flex-direction:column;z-index:1}
+#bg-fx{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(46px);opacity:.38;animation:orbFloat 20s ease-in-out infinite;will-change:transform}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.15)}66%{transform:translate(-50px,50px) scale(.92)}}
+.math-sym{position:absolute;font-family:'Baloo 2',Georgia,serif;font-weight:800;line-height:1;user-select:none;will-change:transform;animation:symDrift ease-in-out infinite,neonPulse 3.6s ease-in-out infinite alternate}
+@keyframes symDrift{0%,100%{transform:translate(0,0) rotate(var(--r0))}50%{transform:translate(var(--dx),var(--dy)) rotate(var(--r1))}}
+@keyframes neonPulse{0%{opacity:.32;text-shadow:0 0 5px currentColor,0 0 14px currentColor}100%{opacity:.6;text-shadow:0 0 9px currentColor,0 0 26px currentColor,0 0 44px currentColor}}
 #bg-floaters{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
 .bg-floater{position:absolute;opacity:.5;filter:drop-shadow(0 8px 16px rgba(120,60,70,.25));animation:floatDrift ease-in-out infinite}
 @keyframes floatDrift{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(22px,-34px) rotate(7deg)}50%{transform:translate(-16px,-58px) rotate(-5deg)}75%{transform:translate(18px,-30px) rotate(4deg)}}
@@ -154,6 +160,7 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 </style>
 </head>
 <body>
+<div id="bg-fx"></div>
 <div id="bg-floaters"></div>
 <div id="app">
   <div id="topbar">
@@ -271,6 +278,48 @@ const $ = id => document.getElementById(id);
 // Yeni logo eklemek için dosya adını buraya yaz (büyük/küçük harf ve uzantı birebir aynı olmalı).
 const LOGO_FILES = ["Logo8.png", "Logo9.png", "Logo10.png"];
 
+// ===== ARKA PLAN: MATEMATİK SEMBOLLERİ + NEON PARILTILAR =====
+(function initMathBackground() {
+  const fx = $('bg-fx');
+  const colors = ['#00A3A3', '#E30A17', '#E8A400', '#7B4FC4', '#1F9D55'];
+  const rnd = (a, b) => a + Math.random() * (b - a);
+
+  // Yumuşak neon ışık küreleri
+  for (let i = 0; i < 6; i++) {
+    const orb = document.createElement('div');
+    orb.className = 'glow-orb';
+    const size = rnd(180, 340);
+    orb.style.width = orb.style.height = size + 'px';
+    orb.style.left = rnd(-5, 90) + '%';
+    orb.style.top = rnd(-5, 90) + '%';
+    orb.style.background = colors[i % colors.length];
+    orb.style.animationDuration = rnd(16, 28) + 's';
+    orb.style.animationDelay = '-' + rnd(0, 20) + 's';
+    fx.appendChild(orb);
+  }
+
+  // Süzülen matematik sembolleri
+  const symbols = ['∑', '√', 'π', '∞', '+', '×', '÷', '∫'];
+  const count = 26;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'math-sym';
+    s.textContent = symbols[i % symbols.length];
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    s.style.color = c;
+    s.style.fontSize = rnd(30, 84) + 'px';
+    s.style.left = rnd(1, 96) + '%';
+    s.style.top = rnd(1, 94) + '%';
+    s.style.setProperty('--dx', rnd(-50, 50) + 'px');
+    s.style.setProperty('--dy', rnd(-70, 70) + 'px');
+    s.style.setProperty('--r0', rnd(-25, 25) + 'deg');
+    s.style.setProperty('--r1', rnd(-25, 25) + 'deg');
+    s.style.animationDuration = rnd(14, 30) + 's,' + rnd(2.8, 5) + 's';
+    s.style.animationDelay = '-' + rnd(0, 20) + 's,-' + rnd(0, 4) + 's';
+    fx.appendChild(s);
+  }
+})();
+
 // ===== TAM EKRAN =====
 (function initFullscreen() {
   const btn = $('fs-btn'), icon = $('fs-icon'), label = $('fs-label');
@@ -375,7 +424,7 @@ const getServerNow = () => Date.now() + serverTimeOffset;
 
 // ===== SORULAR (4 şıklı) =====
 const QUESTION_BANK = [
-  { question: "Rakamları birbirinden farklı 5 basamaklı en küçük tek sayı ile 4 basamaklı en büyük çift sayı arasındaki fark kaçtır?", options: ["237", "239", "337", "351"], answer: "D" },
+  { question: "Rakamları birbirinden farklı 5 basamaklı en küçük tek sayı ile 4 basamaklı en büyük çift sayı arasındaki fark kaçtır?", options: ["237", "239", "337", "351"], answer: "A" },
   { question: "Kalanlı bir bölme işleminde bölen 16, bölüm ise kalanın 3 katına eşittir. Bu bölme işleminde bölünen sayının alabileceği en büyük değer kaçtır?", options: ["705", "720", "735", "750"], answer: "C" },
   { question: "Ahmet'in bilyelerinin sayısı Mehmet'in bilyelerinin sayısının 3 katından 12 eksiktir. İkisinin toplam 84 bilyesi olduğuna göre, Ahmet'in kaç bilyesi vardır?", options: ["24", "60", "64", "72"], answer: "B" },
   { question: "Bir su deposundaki 180 litre suyun önce 2/9'si, sonra kalan suyun 1/2'i satılıyor. Depoda geriye kaç litre su kalmıştır?", options: ["50", "70", "80", "90"], answer: "B" },
@@ -384,7 +433,7 @@ const QUESTION_BANK = [
   { question: "Çevresi 48 cm olan bir karenin bir kenar uzunluğu, kısa kenarı 8 cm olan bir dikdörtgenin uzun kenarına eşittir. Buna göre bu dikdörtgenin alanı kaç cm²'dir?", options: ["64", "96", "112", "144"], answer: "B" },
   { question: "4 m 8 cm uzunluğundaki bir kurdele 12 eşit parçaya bölünüyor. Elde edilen her bir parçanın uzunluğu kaç milimetredir (mm)?", options: ["34", "340", "400", "3400"], answer: "B" },
   { question: "Bir satıcı 150 kg elmanın kilosunu 20 TL'den almıştır. Taşıma sırasında elmaların 30 kg'ı çürüdüğü için atılmıştır. Satıcının bu alışverişten 600 TL kâr edebilmesi için kalan elmaların kilosunu kaç TL'den satması gerekir?", options: ["25", "28", "30", "32"], answer: "C" },
-  { question: "Bir sınıftaki öğrencilerin sevdikleri meyveler şöyledir: 10 kişi Elma, 8 kişi Muz, 6 kişi Çilek sevmektedir. Sınıf mevcudu 30 kişi olduğuna göre, başka meyve seven veya fikri olmayan kaç öğrenci vardır?", options: ["4", "6", "8", "10"], answer: "A" },
+  { question: "Bir sınıftaki öğrencilerin sevdikleri meyveler şöyledir: 10 kişi Elma, 8 kişi Muz, 6 kişi Çilek sevmektedir. Sınıf mevcudu 30 kişi olduğuna göre, başka meyve seven veya fikri olmayan kaç öğrenci vardır?", options: ["4", "6", "8", "10"], answer: "B" },
   { question: "Bir kağıt üzerine işaretlenen tek bir A noktasından geçen kaç farklı doğru çizilebilir?", options: ["Yalnızca 1 tane", "2 tane", "100 tane", "Sonsuz sayıda"], answer: "D" },
   { question: "Bir düzlemde bulunan iki farklı K ve L noktasından aynı anda geçen kaç farklı doğru çizilebilir?", options: ["Yalnızca 1 tane", "2 tane", "4 tane", "Sonsuz sayıda"], answer: "A" },
   { question: "Bir ucu kapalı (sınırlı), diğer ucu ise sonsuza kadar uzayan çizgi modeline ne ad verilir?", options: ["Doğru", "Işın", "Doğru Parçası", "Nokta"], answer: "B" },
