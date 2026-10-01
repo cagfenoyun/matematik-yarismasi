@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Matematik Bilgi Yarışması</title>
+<link rel="icon" href="Logo9.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -17,10 +18,10 @@ background:radial-gradient(circle at 15% 10%,rgba(255,214,150,.65),transparent 4
 .bg-floater{position:absolute;opacity:.5;filter:drop-shadow(0 8px 16px rgba(120,60,70,.25));animation:floatDrift ease-in-out infinite}
 @keyframes floatDrift{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(22px,-34px) rotate(7deg)}50%{transform:translate(-16px,-58px) rotate(-5deg)}75%{transform:translate(18px,-30px) rotate(4deg)}}
 .burst-layer{position:fixed;left:0;top:0;width:0;height:0;z-index:9999;pointer-events:none}
-.burst-piece{position:absolute;width:64px;height:64px;transform:translate(-50%,-50%);animation:burstFly 1.8s cubic-bezier(.15,.7,.25,1) forwards;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
+.burst-piece{position:absolute;width:64px;height:64px;object-fit:contain;transform:translate(-50%,-50%);animation:burstFly 1.8s cubic-bezier(.15,.7,.25,1) forwards;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
 @keyframes burstFly{0%{transform:translate(-50%,-50%) scale(.6);opacity:1}12%{transform:translate(-50%,-50%) scale(1.25);opacity:1}70%{transform:translate(calc(-50% + var(--tx)*.9),calc(-50% + var(--ty)*.9)) scale(.85) rotate(calc(var(--rot)*.85));opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(.3) rotate(var(--rot));opacity:0}}
-#topbar{display:flex;align-items:center;gap:20px;padding:18px 40px;background:rgba(255,255,255,.7);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);position:relative;z-index:20;flex-shrink:0}
-.brand-icon{width:52px;height:52px;flex-shrink:0}
+#topbar{display:flex;align-items:center;gap:20px;padding:12px 40px;background:rgba(255,255,255,.7);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);position:relative;z-index:20;flex-shrink:0}
+.brand-icon{height:60px;width:auto;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(120,60,70,.25))}
 .brand-text{display:flex;flex-direction:column;line-height:1.05}
 .brand-text .club{font-family:'Baloo 2';font-weight:800;font-size:30px;color:var(--red-dark)}
 .brand-text .sub{font-size:16px;color:var(--muted);font-weight:700}
@@ -56,7 +57,7 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 .field input:focus{outline:none;border-color:var(--turq)}
 .field input.code-input{letter-spacing:14px;text-align:center;font-family:'Baloo 2';font-size:34px}
 .error-msg{color:#8A1620;background:#FFE3E5;border:1px solid #F3A5AB;padding:14px 18px;border-radius:12px;font-weight:700;font-size:18px;display:none}
-@media(max-width:860px){.home-columns{flex-direction:column}.home-divider{width:auto;height:2px;margin:8px 0}#topbar{padding:14px 18px}}
+@media(max-width:860px){.home-columns{flex-direction:column}.home-divider{width:auto;height:2px;margin:8px 0}#topbar{padding:10px 18px}}
 .lobby-code{text-align:center;margin-bottom:28px}
 .lobby-code .cap{font-size:16px;letter-spacing:2px;color:var(--muted);font-weight:800}
 .lobby-code .val{font-family:'Baloo 2';font-size:76px;font-weight:800;color:var(--gold);letter-spacing:20px}
@@ -143,7 +144,7 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 @media(max-width:900px){.options-grid{grid-template-columns:1fr}.sc-name{max-width:90px}.question-card{padding:24px 20px}}
 #screen-intro{gap:22px;overflow:hidden}
 .intro-welcome{display:flex;flex-direction:column;align-items:center;text-align:center;gap:26px;padding:0 20px}
-.intro-icon-svg{width:clamp(64px,7vw,96px);opacity:0;animation:iIn .6s ease .1s forwards,iOut .6s ease 4.2s forwards}
+.intro-logo{width:clamp(110px,15vw,190px);height:auto;object-fit:contain;opacity:0;filter:drop-shadow(0 10px 20px rgba(120,60,70,.3));animation:iIn .6s ease .1s forwards,iOut .6s ease 4.2s forwards}
 .intro-title{font-family:'Baloo 2';font-weight:800;font-size:clamp(42px,7vw,92px);line-height:1.15;margin:0;background:linear-gradient(90deg,var(--red),#E8A400 35%,var(--turq) 65%,var(--red));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rain 4s linear infinite,pIn .7s cubic-bezier(.34,1.56,.64,1) both,iOut .6s ease 4.2s forwards}
 @keyframes rain{to{background-position:300% 50%}}
 @keyframes pIn{0%{opacity:0;transform:scale(.6) translateY(20px)}100%{opacity:1;transform:scale(1)}}
@@ -156,7 +157,7 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 <div id="bg-floaters"></div>
 <div id="app">
   <div id="topbar">
-    <svg class="brand-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><mask id="cm1"><rect width="64" height="64" fill="#fff"/><circle cx="35" cy="32" r="12.5" fill="#000"/></mask></defs><circle cx="32" cy="32" r="30" fill="#E30A17"/><circle cx="28" cy="32" r="15.5" fill="#fff" mask="url(#cm1)"/><polygon points="0,-8.5 2.0,-2.6 8.1,-2.6 3.1,1.0 5.0,6.9 0,3.2 -5.0,6.9 -3.1,1.0 -8.1,-2.6 -2.0,-2.6" fill="#fff" transform="translate(44,32)"/></svg>
+    <img class="brand-icon" src="Logo9.png" alt="Logo">
     <div class="brand-text"><span class="club">Matematik</span><span class="sub">Bilgi Yarışması</span></div>
     <div class="spacer"></div>
     <div id="room-badge">ODA KODU <b id="room-badge-code">----</b></div>
@@ -165,7 +166,7 @@ p.lead{color:var(--muted);font-weight:700;text-align:center;margin:0 0 36px;font
 
   <div class="screen active" id="screen-intro">
     <div class="intro-welcome">
-      <svg class="intro-icon-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><mask id="cm2"><rect width="64" height="64" fill="#fff"/><circle cx="35" cy="32" r="12.5" fill="#000"/></mask></defs><circle cx="32" cy="32" r="30" fill="#E30A17"/><circle cx="28" cy="32" r="15.5" fill="#fff" mask="url(#cm2)"/><polygon points="0,-8.5 2.0,-2.6 8.1,-2.6 3.1,1.0 5.0,6.9 0,3.2 -5.0,6.9 -3.1,1.0 -8.1,-2.6 -2.0,-2.6" fill="#fff" transform="translate(44,32)"/></svg>
+      <img class="intro-logo" src="Logo9.png" alt="Logo">
       <h1 class="intro-title">MATEMATİK<br>BİLGİ YARIŞMASI</h1>
       <div class="intro-sub">Düşün, hesapla, kazan! Başarılar dileriz.</div>
     </div>
@@ -264,6 +265,10 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const $ = id => document.getElementById(id);
+
+// ===== LOGOLAR =====
+// Patlama, süzülen arka plan ve konfeti bu listeyi kullanır.
+// Yeni logo eklemek için dosya adını buraya yaz (büyük/küçük harf ve uzantı birebir aynı olmalı).
 const LOGO_FILES = ["Logo8.png", "Logo9.png", "Logo10.png"];
 
 // ===== TAM EKRAN =====
@@ -309,7 +314,8 @@ function scatterLogosFrom(el) {
   const layer = document.createElement('div');
   layer.className = 'burst-layer';
   document.body.appendChild(layer);
-  for (let i = 0; i < 22; i++) {
+  const count = Math.max(24, LOGO_FILES.length * 8);
+  for (let i = 0; i < count; i++) {
     const img = document.createElement('img');
     img.src = LOGO_FILES[i % LOGO_FILES.length]; img.alt = ""; img.className = 'burst-piece';
     img.style.left = (r.left + r.width / 2) + 'px';
@@ -739,7 +745,7 @@ function runChampionReveal(text) {
   const stage = document.createElement('div');
   stage.className = 'reveal-logo-stage';
   overlay.appendChild(stage);
-  const seq = ['Logo10.png', 'Logo9.png', 'Logo8.png'], per = 620;
+  const seq = LOGO_FILES.slice().reverse(), per = 620;
   seq.forEach(function (src, i) {
     setTimeout(function () {
       stage.innerHTML = '';
